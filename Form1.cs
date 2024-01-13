@@ -7,7 +7,7 @@ namespace SimpleSample
     public partial class Form1 : Form
     {
         public SQLiteConnection sqlConnection = null;
-        KeyBase keyBase = new KeyBase();
+        public KeyBase keyBase;
         public int index;
         public uint id;
         public bool flag;
@@ -23,6 +23,7 @@ namespace SimpleSample
             sqlConnection = new SQLiteConnection(connString);
             sqlConnection.Open();
             updateData();
+            keyBase = new(dataGridView1.RowCount);
             updateDataSSTable();
             dataGridView1.Columns["Id"].Visible = false;
             dataGridView1.AllowUserToAddRows = false;
@@ -33,6 +34,7 @@ namespace SimpleSample
             //поверх всех  окон
             button4.Image = System.Drawing.Image.FromFile("images/attach.png");
             TopMost = true;
+            MessageBox.Show($"{dataGridView1.RowCount}");
         }
 
         public Form1()
@@ -63,6 +65,7 @@ namespace SimpleSample
             label1 = new Label();
             hideBut = new Button();
             addBut = new Button();
+            button9 = new Button();
             tableLayoutPanel5 = new TableLayoutPanel();
             SearchBox = new TextBox();
             button6 = new Button();
@@ -154,7 +157,7 @@ namespace SimpleSample
             tabControl1.Location = new Point(0, 0);
             tabControl1.Name = "tabControl1";
             tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(317, 368);
+            tabControl1.Size = new Size(344, 368);
             tabControl1.SizeMode = TabSizeMode.Fixed;
             tabControl1.TabIndex = 3;
             tabControl1.TabStop = false;
@@ -169,7 +172,7 @@ namespace SimpleSample
             tabPage1.Location = new Point(4, 5);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(309, 359);
+            tabPage1.Size = new Size(336, 359);
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Шаблоны";
             // 
@@ -201,7 +204,7 @@ namespace SimpleSample
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Percent, 86.6666641F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 52F));
             tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
-            tableLayoutPanel1.Size = new Size(303, 353);
+            tableLayoutPanel1.Size = new Size(330, 353);
             tableLayoutPanel1.TabIndex = 0;
             // 
             // dataGridView1
@@ -233,14 +236,14 @@ namespace SimpleSample
             dataGridView1.RowTemplate.Height = 33;
             dataGridView1.ScrollBars = ScrollBars.Vertical;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.CellSelect;
-            dataGridView1.Size = new Size(297, 254);
+            dataGridView1.Size = new Size(324, 254);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellEnter += dataGridView1_CellEnter;
             // 
             // tableLayoutPanel3
             // 
             tableLayoutPanel3.BackColor = Color.WhiteSmoke;
-            tableLayoutPanel3.ColumnCount = 7;
+            tableLayoutPanel3.ColumnCount = 8;
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.6608286F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.6608438F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.6608438F));
@@ -248,6 +251,7 @@ namespace SimpleSample
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 13.2517262F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 12.66368F));
             tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 23.4462986F));
+            tableLayoutPanel3.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 20F));
             tableLayoutPanel3.Controls.Add(saveSaplesBut, 5, 0);
             tableLayoutPanel3.Controls.Add(button3, 0, 0);
             tableLayoutPanel3.Controls.Add(button5, 1, 0);
@@ -255,12 +259,13 @@ namespace SimpleSample
             tableLayoutPanel3.Controls.Add(button8, 3, 0);
             tableLayoutPanel3.Controls.Add(tableLayoutPanel14, 6, 0);
             tableLayoutPanel3.Controls.Add(addBut, 4, 0);
+            tableLayoutPanel3.Controls.Add(button9, 7, 0);
             tableLayoutPanel3.Dock = DockStyle.Fill;
             tableLayoutPanel3.Location = new Point(3, 303);
             tableLayoutPanel3.Name = "tableLayoutPanel3";
             tableLayoutPanel3.RowCount = 1;
             tableLayoutPanel3.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel3.Size = new Size(297, 47);
+            tableLayoutPanel3.Size = new Size(324, 47);
             tableLayoutPanel3.TabIndex = 2;
             // 
             // saveSaplesBut
@@ -269,9 +274,9 @@ namespace SimpleSample
             saveSaplesBut.Dock = DockStyle.Fill;
             saveSaplesBut.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
             saveSaplesBut.Image = Properties.Resources.pngwing_com__1___1_;
-            saveSaplesBut.Location = new Point(190, 3);
+            saveSaplesBut.Location = new Point(195, 3);
             saveSaplesBut.Name = "saveSaplesBut";
-            saveSaplesBut.Size = new Size(31, 41);
+            saveSaplesBut.Size = new Size(32, 41);
             saveSaplesBut.TabIndex = 11;
             saveSaplesBut.UseVisualStyleBackColor = false;
             saveSaplesBut.Click += saveSaplesBut_Click_1;
@@ -283,7 +288,7 @@ namespace SimpleSample
             button3.Image = Properties.Resources.clipart842915__3_;
             button3.Location = new Point(3, 3);
             button3.Name = "button3";
-            button3.Size = new Size(31, 41);
+            button3.Size = new Size(32, 41);
             button3.TabIndex = 3;
             button3.UseVisualStyleBackColor = false;
             button3.Click += button3_Click;
@@ -293,9 +298,9 @@ namespace SimpleSample
             button5.BackColor = Color.WhiteSmoke;
             button5.Dock = DockStyle.Fill;
             button5.Image = Properties.Resources.pngwing_com__4___1_;
-            button5.Location = new Point(40, 3);
+            button5.Location = new Point(41, 3);
             button5.Name = "button5";
-            button5.Size = new Size(31, 41);
+            button5.Size = new Size(32, 41);
             button5.TabIndex = 0;
             button5.UseVisualStyleBackColor = false;
             button5.Click += button5_Click;
@@ -307,9 +312,9 @@ namespace SimpleSample
             button4.Font = new Font("Cascadia Code", 8F, FontStyle.Regular, GraphicsUnit.Point);
             button4.ForeColor = SystemColors.ControlText;
             button4.Image = Properties.Resources.noAttach;
-            button4.Location = new Point(77, 3);
+            button4.Location = new Point(79, 3);
             button4.Name = "button4";
-            button4.Size = new Size(31, 41);
+            button4.Size = new Size(32, 41);
             button4.TabIndex = 4;
             button4.UseVisualStyleBackColor = false;
             button4.Click += button4_Click;
@@ -319,9 +324,9 @@ namespace SimpleSample
             button8.BackColor = Color.WhiteSmoke;
             button8.Dock = DockStyle.Fill;
             button8.Image = Properties.Resources.pencil1;
-            button8.Location = new Point(114, 3);
+            button8.Location = new Point(117, 3);
             button8.Name = "button8";
-            button8.Size = new Size(31, 41);
+            button8.Size = new Size(32, 41);
             button8.TabIndex = 5;
             button8.UseVisualStyleBackColor = false;
             button8.Click += button8_Click;
@@ -332,12 +337,12 @@ namespace SimpleSample
             tableLayoutPanel14.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
             tableLayoutPanel14.Controls.Add(label1, 0, 0);
             tableLayoutPanel14.Controls.Add(hideBut, 0, 1);
-            tableLayoutPanel14.Location = new Point(227, 3);
+            tableLayoutPanel14.Location = new Point(233, 3);
             tableLayoutPanel14.Name = "tableLayoutPanel14";
             tableLayoutPanel14.RowCount = 2;
             tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 53.658535F));
             tableLayoutPanel14.RowStyles.Add(new RowStyle(SizeType.Percent, 46.341465F));
-            tableLayoutPanel14.Size = new Size(67, 41);
+            tableLayoutPanel14.Size = new Size(65, 41);
             tableLayoutPanel14.TabIndex = 10;
             // 
             // label1
@@ -348,7 +353,7 @@ namespace SimpleSample
             label1.Font = new Font("Calibri", 10F, FontStyle.Bold, GraphicsUnit.Point);
             label1.Location = new Point(3, 0);
             label1.Name = "label1";
-            label1.Size = new Size(61, 22);
+            label1.Size = new Size(59, 22);
             label1.TabIndex = 2;
             label1.Text = "23:22";
             label1.TextAlign = ContentAlignment.MiddleCenter;
@@ -359,7 +364,7 @@ namespace SimpleSample
             hideBut.Dock = DockStyle.Fill;
             hideBut.Location = new Point(3, 25);
             hideBut.Name = "hideBut";
-            hideBut.Size = new Size(61, 13);
+            hideBut.Size = new Size(59, 13);
             hideBut.TabIndex = 7;
             hideBut.UseVisualStyleBackColor = false;
             hideBut.Click += hideBut_Click;
@@ -369,12 +374,22 @@ namespace SimpleSample
             addBut.BackColor = Color.WhiteSmoke;
             addBut.Dock = DockStyle.Fill;
             addBut.Image = Properties.Resources.plus;
-            addBut.Location = new Point(151, 3);
+            addBut.Location = new Point(155, 3);
             addBut.Name = "addBut";
-            addBut.Size = new Size(33, 41);
+            addBut.Size = new Size(34, 41);
             addBut.TabIndex = 6;
             addBut.UseVisualStyleBackColor = false;
             addBut.Click += addBut_Click;
+            // 
+            // button9
+            // 
+            button9.Dock = DockStyle.Fill;
+            button9.Location = new Point(304, 3);
+            button9.Name = "button9";
+            button9.Size = new Size(17, 41);
+            button9.TabIndex = 12;
+            button9.UseVisualStyleBackColor = true;
+            button9.Click += button9_Click;
             // 
             // tableLayoutPanel5
             // 
@@ -391,7 +406,7 @@ namespace SimpleSample
             tableLayoutPanel5.Name = "tableLayoutPanel5";
             tableLayoutPanel5.RowCount = 1;
             tableLayoutPanel5.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            tableLayoutPanel5.Size = new Size(297, 34);
+            tableLayoutPanel5.Size = new Size(324, 34);
             tableLayoutPanel5.TabIndex = 5;
             // 
             // SearchBox
@@ -399,7 +414,7 @@ namespace SimpleSample
             SearchBox.Dock = DockStyle.Fill;
             SearchBox.Location = new Point(3, 3);
             SearchBox.Name = "SearchBox";
-            SearchBox.Size = new Size(203, 25);
+            SearchBox.Size = new Size(222, 25);
             SearchBox.TabIndex = 1;
             SearchBox.TextChanged += SearchBox_TextChanged;
             // 
@@ -407,9 +422,9 @@ namespace SimpleSample
             // 
             button6.Dock = DockStyle.Fill;
             button6.Image = Properties.Resources.pngwing_com__1_;
-            button6.Location = new Point(212, 3);
+            button6.Location = new Point(231, 3);
             button6.Name = "button6";
-            button6.Size = new Size(37, 28);
+            button6.Size = new Size(41, 28);
             button6.TabIndex = 1;
             button6.UseVisualStyleBackColor = true;
             button6.Click += button6_Click;
@@ -418,9 +433,9 @@ namespace SimpleSample
             // 
             smartSearchBut.Dock = DockStyle.Fill;
             smartSearchBut.Image = Properties.Resources.pngwing_com__2___1_;
-            smartSearchBut.Location = new Point(255, 3);
+            smartSearchBut.Location = new Point(278, 3);
             smartSearchBut.Name = "smartSearchBut";
-            smartSearchBut.Size = new Size(39, 28);
+            smartSearchBut.Size = new Size(43, 28);
             smartSearchBut.TabIndex = 2;
             smartSearchBut.UseVisualStyleBackColor = true;
             smartSearchBut.Click += smartSearchBut_Click;
@@ -446,7 +461,7 @@ namespace SimpleSample
             tabPage2.Location = new Point(4, 5);
             tabPage2.Name = "tabPage2";
             tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(309, 359);
+            tabPage2.Size = new Size(336, 359);
             tabPage2.TabIndex = 1;
             tabPage2.Text = "Добавить";
             // 
@@ -464,7 +479,7 @@ namespace SimpleSample
             tableLayoutPanel2.RowCount = 2;
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel2.RowStyles.Add(new RowStyle(SizeType.Absolute, 42F));
-            tableLayoutPanel2.Size = new Size(303, 353);
+            tableLayoutPanel2.Size = new Size(330, 353);
             tableLayoutPanel2.TabIndex = 2;
             // 
             // panel1
@@ -473,7 +488,7 @@ namespace SimpleSample
             panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(3, 3);
             panel1.Name = "panel1";
-            panel1.Size = new Size(297, 305);
+            panel1.Size = new Size(324, 305);
             panel1.TabIndex = 2;
             // 
             // AddBox
@@ -484,7 +499,7 @@ namespace SimpleSample
             AddBox.Multiline = true;
             AddBox.Name = "AddBox";
             AddBox.ScrollBars = ScrollBars.Vertical;
-            AddBox.Size = new Size(297, 305);
+            AddBox.Size = new Size(324, 305);
             AddBox.TabIndex = 0;
             // 
             // tableLayoutPanel8
@@ -499,7 +514,7 @@ namespace SimpleSample
             tableLayoutPanel8.Name = "tableLayoutPanel8";
             tableLayoutPanel8.RowCount = 1;
             tableLayoutPanel8.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel8.Size = new Size(297, 36);
+            tableLayoutPanel8.Size = new Size(324, 36);
             tableLayoutPanel8.TabIndex = 3;
             // 
             // button2
@@ -507,9 +522,9 @@ namespace SimpleSample
             button2.BackColor = Color.WhiteSmoke;
             button2.Dock = DockStyle.Fill;
             button2.Font = new Font("Segoe UI", 7F, FontStyle.Regular, GraphicsUnit.Point);
-            button2.Location = new Point(151, 3);
+            button2.Location = new Point(165, 3);
             button2.Name = "button2";
-            button2.Size = new Size(143, 30);
+            button2.Size = new Size(156, 30);
             button2.TabIndex = 1;
             button2.Text = "Добавить шаблон";
             button2.UseVisualStyleBackColor = false;
@@ -521,7 +536,7 @@ namespace SimpleSample
             cancelAdd.Dock = DockStyle.Fill;
             cancelAdd.Location = new Point(3, 3);
             cancelAdd.Name = "cancelAdd";
-            cancelAdd.Size = new Size(142, 30);
+            cancelAdd.Size = new Size(156, 30);
             cancelAdd.TabIndex = 2;
             cancelAdd.Text = "Назад";
             cancelAdd.UseVisualStyleBackColor = false;
@@ -532,7 +547,7 @@ namespace SimpleSample
             tabPage3.Controls.Add(button7);
             tabPage3.Location = new Point(4, 5);
             tabPage3.Name = "tabPage3";
-            tabPage3.Size = new Size(309, 359);
+            tabPage3.Size = new Size(336, 359);
             tabPage3.TabIndex = 2;
             tabPage3.Text = "Скрыть";
             tabPage3.UseVisualStyleBackColor = true;
@@ -542,7 +557,7 @@ namespace SimpleSample
             button7.Dock = DockStyle.Top;
             button7.Location = new Point(0, 0);
             button7.Name = "button7";
-            button7.Size = new Size(309, 12);
+            button7.Size = new Size(336, 12);
             button7.TabIndex = 0;
             button7.Text = "button7";
             button7.UseVisualStyleBackColor = true;
@@ -552,7 +567,7 @@ namespace SimpleSample
             tabPage4.Controls.Add(tableLayoutPanel4);
             tabPage4.Location = new Point(4, 5);
             tabPage4.Name = "tabPage4";
-            tabPage4.Size = new Size(309, 359);
+            tabPage4.Size = new Size(336, 359);
             tabPage4.TabIndex = 3;
             tabPage4.Text = "Редактор";
             tabPage4.UseVisualStyleBackColor = true;
@@ -569,7 +584,7 @@ namespace SimpleSample
             tableLayoutPanel4.RowCount = 2;
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 86.5625F));
             tableLayoutPanel4.RowStyles.Add(new RowStyle(SizeType.Percent, 13.4375F));
-            tableLayoutPanel4.Size = new Size(309, 359);
+            tableLayoutPanel4.Size = new Size(336, 359);
             tableLayoutPanel4.TabIndex = 0;
             // 
             // editBox
@@ -580,7 +595,7 @@ namespace SimpleSample
             editBox.Multiline = true;
             editBox.Name = "editBox";
             editBox.ScrollBars = ScrollBars.Vertical;
-            editBox.Size = new Size(303, 304);
+            editBox.Size = new Size(330, 304);
             editBox.TabIndex = 0;
             // 
             // tableLayoutPanel7
@@ -595,7 +610,7 @@ namespace SimpleSample
             tableLayoutPanel7.Name = "tableLayoutPanel7";
             tableLayoutPanel7.RowCount = 1;
             tableLayoutPanel7.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel7.Size = new Size(303, 43);
+            tableLayoutPanel7.Size = new Size(330, 43);
             tableLayoutPanel7.TabIndex = 3;
             // 
             // applyBut
@@ -603,9 +618,9 @@ namespace SimpleSample
             applyBut.BackColor = Color.WhiteSmoke;
             applyBut.Dock = DockStyle.Fill;
             applyBut.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            applyBut.Location = new Point(154, 3);
+            applyBut.Location = new Point(168, 3);
             applyBut.Name = "applyBut";
-            applyBut.Size = new Size(146, 37);
+            applyBut.Size = new Size(159, 37);
             applyBut.TabIndex = 1;
             applyBut.Text = "Применить";
             applyBut.UseVisualStyleBackColor = false;
@@ -618,7 +633,7 @@ namespace SimpleSample
             cancelBut.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
             cancelBut.Location = new Point(3, 3);
             cancelBut.Name = "cancelBut";
-            cancelBut.Size = new Size(145, 37);
+            cancelBut.Size = new Size(159, 37);
             cancelBut.TabIndex = 2;
             cancelBut.Text = "Назад";
             cancelBut.UseVisualStyleBackColor = false;
@@ -629,7 +644,7 @@ namespace SimpleSample
             tabPage5.Controls.Add(tableLayoutPanel6);
             tabPage5.Location = new Point(4, 5);
             tabPage5.Name = "tabPage5";
-            tabPage5.Size = new Size(309, 359);
+            tabPage5.Size = new Size(336, 359);
             tabPage5.TabIndex = 4;
             tabPage5.Text = "Умный поиск";
             tabPage5.UseVisualStyleBackColor = true;
@@ -652,7 +667,7 @@ namespace SimpleSample
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 6.29921246F));
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 37.7952766F));
             tableLayoutPanel6.RowStyles.Add(new RowStyle(SizeType.Percent, 11.8110247F));
-            tableLayoutPanel6.Size = new Size(309, 359);
+            tableLayoutPanel6.Size = new Size(336, 359);
             tableLayoutPanel6.TabIndex = 0;
             // 
             // tableLayoutPanel11
@@ -667,7 +682,7 @@ namespace SimpleSample
             tableLayoutPanel11.Name = "tableLayoutPanel11";
             tableLayoutPanel11.RowCount = 1;
             tableLayoutPanel11.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel11.Size = new Size(303, 39);
+            tableLayoutPanel11.Size = new Size(330, 39);
             tableLayoutPanel11.TabIndex = 5;
             // 
             // cancelSsBut
@@ -677,7 +692,7 @@ namespace SimpleSample
             cancelSsBut.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
             cancelSsBut.Location = new Point(3, 3);
             cancelSsBut.Name = "cancelSsBut";
-            cancelSsBut.Size = new Size(145, 33);
+            cancelSsBut.Size = new Size(159, 33);
             cancelSsBut.TabIndex = 0;
             cancelSsBut.Text = "Назад";
             cancelSsBut.UseVisualStyleBackColor = false;
@@ -688,9 +703,9 @@ namespace SimpleSample
             searchBut.BackColor = Color.WhiteSmoke;
             searchBut.Dock = DockStyle.Fill;
             searchBut.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            searchBut.Location = new Point(154, 3);
+            searchBut.Location = new Point(168, 3);
             searchBut.Name = "searchBut";
-            searchBut.Size = new Size(146, 33);
+            searchBut.Size = new Size(159, 33);
             searchBut.TabIndex = 2;
             searchBut.Text = "Генерировать";
             searchBut.UseVisualStyleBackColor = false;
@@ -704,7 +719,7 @@ namespace SimpleSample
             questionBox.Multiline = true;
             questionBox.Name = "questionBox";
             questionBox.ScrollBars = ScrollBars.Vertical;
-            questionBox.Size = new Size(303, 129);
+            questionBox.Size = new Size(330, 129);
             questionBox.TabIndex = 0;
             // 
             // label3
@@ -714,7 +729,7 @@ namespace SimpleSample
             label3.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
             label3.Location = new Point(3, 0);
             label3.Name = "label3";
-            label3.Size = new Size(303, 22);
+            label3.Size = new Size(330, 22);
             label3.TabIndex = 6;
             label3.Text = "Введите вопрос";
             label3.TextAlign = ContentAlignment.TopCenter;
@@ -727,7 +742,7 @@ namespace SimpleSample
             answerBox.Multiline = true;
             answerBox.Name = "answerBox";
             answerBox.ScrollBars = ScrollBars.Vertical;
-            answerBox.Size = new Size(303, 129);
+            answerBox.Size = new Size(330, 129);
             answerBox.TabIndex = 1;
             // 
             // label4
@@ -737,7 +752,7 @@ namespace SimpleSample
             label4.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
             label4.Location = new Point(3, 157);
             label4.Name = "label4";
-            label4.Size = new Size(303, 22);
+            label4.Size = new Size(330, 22);
             label4.TabIndex = 7;
             label4.Text = "Релевантные ответы";
             label4.TextAlign = ContentAlignment.TopCenter;
@@ -747,7 +762,7 @@ namespace SimpleSample
             tabPage6.Controls.Add(tableLayoutPanel9);
             tabPage6.Location = new Point(4, 5);
             tabPage6.Name = "tabPage6";
-            tabPage6.Size = new Size(309, 359);
+            tabPage6.Size = new Size(336, 359);
             tabPage6.TabIndex = 5;
             tabPage6.Text = "Добавить коллекцию";
             tabPage6.UseVisualStyleBackColor = true;
@@ -764,7 +779,7 @@ namespace SimpleSample
             tableLayoutPanel9.RowCount = 2;
             tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
             tableLayoutPanel9.RowStyles.Add(new RowStyle(SizeType.Absolute, 40F));
-            tableLayoutPanel9.Size = new Size(309, 359);
+            tableLayoutPanel9.Size = new Size(336, 359);
             tableLayoutPanel9.TabIndex = 0;
             // 
             // tableLayoutPanel10
@@ -779,14 +794,14 @@ namespace SimpleSample
             tableLayoutPanel10.Name = "tableLayoutPanel10";
             tableLayoutPanel10.RowCount = 1;
             tableLayoutPanel10.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
-            tableLayoutPanel10.Size = new Size(303, 34);
+            tableLayoutPanel10.Size = new Size(330, 34);
             tableLayoutPanel10.TabIndex = 0;
             // 
             // applyCollBut
             // 
             applyCollBut.BackColor = Color.WhiteSmoke;
             applyCollBut.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
-            applyCollBut.Location = new Point(158, 3);
+            applyCollBut.Location = new Point(171, 3);
             applyCollBut.Name = "applyCollBut";
             applyCollBut.Size = new Size(142, 28);
             applyCollBut.TabIndex = 0;
@@ -801,7 +816,7 @@ namespace SimpleSample
             cancelAddCollBut.Font = new Font("Segoe UI", 8F, FontStyle.Regular, GraphicsUnit.Point);
             cancelAddCollBut.Location = new Point(3, 3);
             cancelAddCollBut.Name = "cancelAddCollBut";
-            cancelAddCollBut.Size = new Size(149, 28);
+            cancelAddCollBut.Size = new Size(162, 28);
             cancelAddCollBut.TabIndex = 1;
             cancelAddCollBut.Text = "Назад";
             cancelAddCollBut.UseVisualStyleBackColor = false;
@@ -815,7 +830,7 @@ namespace SimpleSample
             addCollBox.MaxLength = 99999999;
             addCollBox.Multiline = true;
             addCollBox.Name = "addCollBox";
-            addCollBox.Size = new Size(303, 313);
+            addCollBox.Size = new Size(330, 313);
             addCollBox.TabIndex = 1;
             // 
             // timer1
@@ -825,7 +840,7 @@ namespace SimpleSample
             // Form1
             // 
             BackColor = Color.WhiteSmoke;
-            ClientSize = new Size(317, 368);
+            ClientSize = new Size(344, 368);
             Controls.Add(tabControl1);
             Controls.Add(button1);
             Controls.Add(textBox1);
@@ -909,9 +924,9 @@ namespace SimpleSample
                         qComm.ExecuteNonQuery();
                     }
                     //заполняем счет каждого из ключа
-                    for (int i = 0; i < KeyBase.keysCollection; i++)
+                    for (int i = 0; i < keyBase.keysCollection; i++)
                     {
-                        for (int j = 0; j < keyBase.getKey[i].Length; j++)
+                        for (int j = 0; j < keyBase.getKey[i].Count; j++)
                         {
                             SQLiteCommand countComm = new SQLiteCommand($"SELECT COUNT(*) FROM TempQuestion WHERE Word LIKE '%{keyBase.getKey[i][j]}%'", sqlConnection);
                             //определили количество совпадений по ключам
@@ -926,15 +941,15 @@ namespace SimpleSample
                 }
                 else
                 {
-                    if (currIndex < keyBase.sortedIndex.Length)
+                    if (currIndex < keyBase.sortedIndex.Count)
                         currIndex++;
-                    if (currIndex == keyBase.sortedIndex.Length)
+                    if (currIndex == keyBase.sortedIndex.Count)
                         currIndex = 0;
                 }
-                if (keyBase.sortedIndex.Length > 0)
+                if (keyBase.sortedIndex.Count > 0)
                 {
                     //MessageBox.Show($"sortedIndex: {keyBase.sortedIndex.Length}, currIndex: {currIndex}");
-                    if (currIndex < keyBase.sortedIndex.Length)
+                    if (currIndex < keyBase.sortedIndex.Count)
                         answerBox.Text = $"{currIndex + 1}. {dataGridView1.Rows[keyBase.sortedIndex[currIndex]].Cells[1].Value}";
                 }
                 else
@@ -949,11 +964,11 @@ namespace SimpleSample
         void ClearKey()
         {
             keyBase.kTest.Clear();
-            for (int i = 0; i < keyBase.sortedIndex.Length; i++)
+            for (int i = 0; i < keyBase.sortedIndex.Count; i++)
             {
                 keyBase.sortedIndex[i] = 0;
             }
-            for (int i = 0; i < KeyBase.keysCollection; i++)
+            for (int i = 0; i < keyBase.keysCollection; i++)
             {
                 keyBase.keyCount[i] = 0;
                 keyBase.sortedKeys[i] = 0;
@@ -964,14 +979,14 @@ namespace SimpleSample
         void SortingKeys()
         {
             //сортировка от большего к меншьшему в sortedKeys
-            Array.Sort(keyBase.sortedKeys);
-            Array.Reverse(keyBase.sortedKeys);
+            keyBase.sortedKeys.Sort();
+            keyBase.sortedKeys.Reverse();
             foreach (int key in keyBase.sortedKeys)
                 //находим индекс keyCount с наибольшим значением, затем записываем данный индекс в sortedKey.
                 //т.е. sortedKey становится отсортированным массивом из упорядоченных индексов от большего к меньшему.
-                for (int i = 0; i < KeyBase.keysCollection; i++)
+                for (int i = 0; i < keyBase.keysCollection; i++)
                 {
-                    for (int j = 0; j < KeyBase.keysCollection; j++)
+                    for (int j = 0; j < keyBase.keysCollection; j++)
                     {
                         if (keyBase.sortedKeys[i] == keyBase.keyCount[j] && keyBase.sortedKeys[i] != 0)
                         {
@@ -980,7 +995,7 @@ namespace SimpleSample
                     }
                 }
             //!!! убрать нули в tempIndex (незаполненные индексы),  тк они попадают в sortedIndex
-            keyBase.sortedIndex = keyBase.kTest.Distinct().ToArray();
+            keyBase.sortedIndex = keyBase.kTest.Distinct().ToList();
         }
 
         public void updateData()
@@ -1003,11 +1018,6 @@ namespace SimpleSample
             (dataGridView1.DataSource as DataTable).DefaultView.RowFilter = $"Sample LIKE '%{SearchBox.Text}%'";
         }
 
-        private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dataGridView1.CurrentCell != null)
-                Clipboard.SetDataObject(dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[1].Value.ToString());
-        }
 
         public void DeleteCell()
         {
@@ -1239,6 +1249,29 @@ namespace SimpleSample
                 }
             }
         }
+        // копируем содержимое строки в буфер
+        private void dataGridView1_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.CurrentCell != null)
+            {
+                Clipboard.SetDataObject(dataGridView1.Rows[dataGridView1.CurrentCell.RowIndex].Cells[1].Value.ToString());
 
+            }
+        }
+
+        bool keyFormOpened;
+        private void button9_Click(object sender, EventArgs e)
+        {
+
+            if (!keyFormOpened)
+            {
+                Form2 newForm = new Form2(this);
+                newForm.Left = this.Right - 10;
+                newForm.Top = this.Bottom - newForm.Height;
+                newForm.FormClosed += (s, args) => keyFormOpened = false; // Обработчик события закрытия формы
+                newForm.Show();
+                keyFormOpened = true;
+            }
+        }
     }
 }

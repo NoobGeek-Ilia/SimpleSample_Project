@@ -73,5 +73,6 @@
         private TableLayoutPanel tableLayoutPanel11;
         private Label label3;
         private Label label4;
+        private Button button9;
     }
 }
